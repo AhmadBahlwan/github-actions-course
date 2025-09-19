@@ -1,11 +1,12 @@
-on:
-  reporepository_dispatch:
-    types: [incident_report]
+name: Incident Handler
 
+on:
+  repository_dispatch:
+    types: [incident_report]
 
 jobs:
   handle-incident:
-    runruns-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Print incident details
-        run: echo "Inciden reported"
+        run: echo "Incident reported at $(date)"
