@@ -1,0 +1,11 @@
+on:
+  reporepository_dispatch:
+    types: [incident_report]
+
+
+jobs:
+  handle-incident:
+    runruns-on: ubuntu-latest
+    steps:
+      - name: Print incident details
+        run: echo "Inciden reported"
