@@ -1,0 +1,29 @@
+on:
+    workflow_dispatch: 
+
+
+jobs:
+    hybrid-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Run inside an Alpine container
+              uses: docker://alpine:latest  #  The image muse be public on Docker Hub or GitHub Container Registry
+              with:
+                entrypoint: /bin/sh
+                args: |
+                    -c "echo 'This step is run inside an Alpine container'"
+                
+            - name: Run another command in Ubuntu VM
+            run: echo "This step is run in the Ubuntu VM"
+            
+    
+    dockerized_job:     ### We use this approach if we need to run inside a private image.
+        runs-on: ubuntu-latest
+        container:
+            image: node:20
+            credentials:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}  
+        steps:
+            - run: node --version
+            - run: echo "This step is run inside a Node.js container"
